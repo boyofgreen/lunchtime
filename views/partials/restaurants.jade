@@ -1,0 +1,6 @@
+h3 Found some lunchtime resturants
+
+ul(class='list-group' ng-repeat='rest in restaurants | orderBy: userDistance')
+	li(class='list-group-item') 
+		span {{ rest.name }}
+		span(class='badge'){{ getDistance(userLocation, rest.location) | number:2  }} &nbsp; km
