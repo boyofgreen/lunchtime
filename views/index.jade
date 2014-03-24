@@ -5,17 +5,17 @@ block body
     h2 
       span(class='glyphicon glyphicon-user')
       span Hello {{name}}
-    ul.menu
-      li
-        a(href='restaurants') restaurants
+    //- ul.menu
+    //-  li
+    //-    a(href='restaurants') restaurants
 
 
     div(ng-view)
 
     br
-    div
-      | It's lunchtime app: v
-      span(app-version)
+    //- div
+    //-  | It's lunchtime app: v
+    //-  span(app-version)
 
   script(src='js/lib/angular/angular.js')
   script(src='/socket.io/socket.io.js')
@@ -26,5 +26,6 @@ block body
   script(src='js/filters.js')
   script(src='js/directives.js')
   script(src='js/bootstrap.min.js')
-  script(src='http://gitcdn.github.io/ajax/bootstrap-toggle/js/bootstrap-toggle.min.js')
   script(src='js/lib/util.js')
+  script(src='js/lib/jstz.min.js')
+  script(src='js/cordova.js')

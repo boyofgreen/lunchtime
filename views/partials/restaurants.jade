@@ -1,6 +1,9 @@
-h3 Found some lunchtime resturants
+h3 We have found some restaurants based on your profile
+
+h4(class='well') {{ timeUntilLunch | time}} until lunch!
 
 ul(class='list-group' ng-repeat='rest in restaurants | orderBy: userDistance')
 	li(class='list-group-item') 
-		span {{ rest.name }}
+		span {{ rest.name }} &nbsp;
+		span(ng-if='isPreferred(rest, userPreferences)' class='label label-success') Preferred
 		span(class='badge'){{ getDistance(userLocation, rest.location) | number:2  }} &nbsp; km

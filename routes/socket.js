@@ -3,23 +3,43 @@
  */
 
 module.exports = function (socket) {
+	// Send a user name to the app on connection
 	socket.emit('send:name', {
-		name: 'Bob'
+		name: 'Lunchtime user'
 	});
 
+	// Send the users preferences to the app
+	socket.emit('send:userPreferences', {
+		userPreferences: getUserPreferences()
+	});
+
+	// Send the resturant data to the app on connection
 	socket.emit('send:getRestaurants', {
 		restaurants: getRestaurants()
 	});
 
+	// Recieve the users location from the client app
 	socket.on('send:userLocation', function (data) {
-		console.log("userLocation: " + data.latitude + ", " + data.longitude);
+		//console.log("userLocation: " + data.latitude + ", " + data.longitude);
 		socket.emit('send:userLocation',data);
-	})
+	});
+
+	// Recieve the users timezone from the client app
+	socket.on('send:userTimeZone', function (data) {
+		//console.log(data);
+	});
+
+	setInterval(function () {
+		socket.emit('send:timeUntilLunch', {
+			timeUntilLunch: timeUntilLunch()
+		})
+	}, 1000)
+
 };
 
 
 // Private function to return resturant data
-function getRestaurants(){
+function getRestaurants() {
 	var restaurants = [
 		{
 			'id':3,
@@ -53,9 +73,28 @@ function getRestaurants(){
 	return restaurants;
 }
 
-/*
-<div class="btn-group btn-toggle"> 
-    <button class="btn btn-xs btn-default">ON</button>
-    <button class="btn btn-xs btn-primary active">OFF</button>
-  </div>
-*/
+
+// Private function to return user prefs
+function getUserPreferences() {
+	var preferences = [
+		{ 'id' : 1 },
+		{ 'id' : 3 }
+	]
+	return preferences;
+}
+
+function timeUntilLunch() {
+	
+	var now = new Date();
+
+	var secondsPassed = 0;
+	var noon = 12 * 3600;
+
+	secondsPassed += ( now.getHours() * 3600 );
+	secondsPassed += ( now.getMinutes() * 60 );
+	secondsPassed += now.getSeconds();
+
+	var secondsLeft = noon - secondsPassed;
+
+	return secondsLeft;
+}
