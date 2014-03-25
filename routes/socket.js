@@ -18,6 +18,10 @@ module.exports = function (socket) {
 		restaurants: getRestaurants()
 	});
 
+	socket.emit('send:timeUntilLunch', {
+		timeUntilLunch: timeUntilLunch()
+	});
+
 	// Recieve the users location from the client app
 	socket.on('send:userLocation', function (data) {
 		//console.log("userLocation: " + data.latitude + ", " + data.longitude);
@@ -28,13 +32,6 @@ module.exports = function (socket) {
 	socket.on('send:userTimeZone', function (data) {
 		//console.log(data);
 	});
-
-	setInterval(function () {
-		socket.emit('send:timeUntilLunch', {
-			timeUntilLunch: timeUntilLunch()
-		})
-	}, 1000)
-
 };
 
 

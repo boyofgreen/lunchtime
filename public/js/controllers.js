@@ -58,9 +58,27 @@ function restaurantsController($scope, socket) {
 		$scope.userPreferences = data.userPreferences;
 	});
 
-	socket.on('send:timeUntilLunch', function (data) {
-		$scope.timeUntilLunch = data.timeUntilLunch;
-	});
+	// socket.on('send:timeUntilLunch', function (data) {
+	// 	$scope.startTimer(data.timeUntilLunch);
+	// });
+
+	$scope.startTime = function(){
+		var now = new Date();
+
+		var secondsPassed = 0;
+		var noon = 12 * 3600;
+
+		secondsPassed += ( now.getHours() * 3600 );
+		secondsPassed += ( now.getMinutes() * 60 );
+		secondsPassed += now.getSeconds();
+
+		var secondsLeft = noon - secondsPassed;
+
+		$scope.timeUntilLunch = secondsLeft;
+		window.requestAnimFrame($scope.startTime);
+	}
+
+	$scope.startTime();
 
 	// Helper function to calculate the appoximate distance from an origin location to a destination
 	$scope.getDistance = function (originLocation, destinationLocation, units) {
