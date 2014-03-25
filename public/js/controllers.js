@@ -30,7 +30,6 @@ var timeLoop = function() {
 	})
 }
 
-requestAnimationFrame(timeLoop);
 
 function updateModel(element_id, callback) {
 	var sc = angular.element(document.getElementById(element_id)).scope();
@@ -104,23 +103,8 @@ function restaurantsController($scope, socket) {
 	// 	$scope.startTimer(data.timeUntilLunch);
 	// });
 
-	$scope.startTime = function(){
-		var now = new Date();
+	requestAnimationFrame(timeLoop);
 
-		var secondsPassed = 0;
-		var noon = 12 * 3600;
-
-		secondsPassed += ( now.getHours() * 3600 );
-		secondsPassed += ( now.getMinutes() * 60 );
-		secondsPassed += now.getSeconds();
-
-		var secondsLeft = noon - secondsPassed;
-
-		$scope.timeUntilLunch = secondsLeft;
-		window.requestAnimFrame($scope.startTime);
-	}
-
-	//$scope.startTime();
 
 	// Helper function to calculate the appoximate distance from an origin location to a destination
 	$scope.getDistance = function (originLocation, destinationLocation, units) {
