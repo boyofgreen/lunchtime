@@ -3,12 +3,19 @@ html(ng-app='lunchtime')
   head
     meta(charset='utf8')
 
+    // - Add meta tags for Windows
     meta(name='application-name' content='Lunchtime App')
     meta(name='msapplication-TileColor' content='#40eb5f')
     //- meta(name='msapplication-square70x70logo' content='tiny.png')
     meta(name='msapplication-square150x150logo' content='img/square150x150.jpg')
     meta(name='msapplication-wide310x150logo' content='img/wide310x310.png')
     //- meta(name='msapplication-square310x310logo' content='large.jpg')
+
+
+    //- Add links for iOS
+    meta(name='apple-mobile-web-app-capable' content='yes')
+    link(rel='apple-touch-icon-precomosed' href='img/appleIcon.png')
+    link(rel='apple-touch-startup-image' href='img/appleSplash.jpg')
 
     base(href='/')
     title Lunchtime App
