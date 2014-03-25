@@ -1,4 +1,39 @@
 'use strict';
+var timeUntilLunch = 0;
+
+var requestAnimationFrame = window.requestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    window.webkitRequestAnimationFrame;
+
+
+var timeLoop = function() {
+	updateModel('timer', function(scope) {
+		var now = new Date();
+
+		var secondsPassed = 0;
+		var noon = 12 * 3600;
+
+		secondsPassed += ( now.getHours() * 3600 );
+		secondsPassed += ( now.getMinutes() * 60 );
+		secondsPassed += now.getSeconds();
+
+		scope.timeUntilLunch = noon - secondsPassed;
+		requestAnimationFrame(timeLoop);
+	})
+}
+
+requestAnimationFrame(timeLoop);
+
+function updateModel(element_id, callback) {
+	var sc = angular.element(document.getElementById(element_id)).scope();
+    
+	if(sc){
+	    sc.$apply(function(sc){
+	        callback(sc);
+	    });
+    }
+}
 
 /* Controllers */
 
@@ -78,7 +113,7 @@ function restaurantsController($scope, socket) {
 		window.requestAnimFrame($scope.startTime);
 	}
 
-	$scope.startTime();
+	//$scope.startTime();
 
 	// Helper function to calculate the appoximate distance from an origin location to a destination
 	$scope.getDistance = function (originLocation, destinationLocation, units) {

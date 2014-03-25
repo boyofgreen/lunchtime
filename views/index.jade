@@ -1,7 +1,7 @@
 extends layout
 
 block body
-  div(ng-controller='lunchtimeController')
+  div(data-ng-controller='lunchtimeController')
     h2 
       span(class='glyphicon glyphicon-user')
       span Hello {{name}}
@@ -10,10 +10,10 @@ block body
     //-    a(href='restaurants') restaurants
 
 
-    div(ng-view)
+    div(data-ng-view)
 
-    br
     //- div
+    br
     //-  | It's lunchtime app: v
     //-  span(app-version)
 
