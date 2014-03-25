@@ -24,6 +24,7 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(express.static(__dirname + '/public'));
   app.use(app.router);
+  app.use(express.favicon(__dirname + '/public/favicon.ico')); 
 });
 
 app.configure('development', function(){

@@ -18,7 +18,14 @@ var timeLoop = function() {
 		secondsPassed += ( now.getMinutes() * 60 );
 		secondsPassed += now.getSeconds();
 
-		scope.timeUntilLunch = noon - secondsPassed;
+		var checkTime = noon - secondsPassed;
+		if(checkTime < 0) {
+			scope.timeUntilLunch = false;
+			scope.timeAfterLunch = secondsPassed - noon;
+		} else {
+			scope.timeUntilLunch = noon - secondsPassed;		
+		}
+	
 		requestAnimationFrame(timeLoop);
 	})
 }

@@ -1,6 +1,8 @@
 h3 We have found some restaurants based on your profile
 
-h4(class='well' id='timer') {{ timeUntilLunch | time}} until lunch!
+h4(class='well' id='timer') {{ timeUntilLunch | time}} 
+	span(ng-if='timeUntilLunch') until lunch.
+	span(ng-if='!timeUntilLunch') {{ timeAfterLunch | time }} after lunch.
 
 ul(class='list-group' ng-repeat='rest in restaurants | orderBy: userDistance' id='restaurantList')
 	li(class='list-group-item') 
