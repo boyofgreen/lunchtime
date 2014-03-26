@@ -23,8 +23,8 @@ module.exports = function (socket) {
 		timeUntilLunch: timeUntilLunch()
 	});
 
-	// Recieve the users location from the client app
-	socket.on('send:userLocation', function (data) {
+	// Receive the users location from the client app
+	socket.on('client:userLocation', function (data) {
 		//console.log("userLocation: " + data.latitude + ", " + data.longitude);
 		socket.emit('send:userLocation',data);
 		socket.disconnect();
