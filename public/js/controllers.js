@@ -41,6 +41,16 @@ function updateModel(element_id, callback) {
     }
 }
 
+function updateModel2(element_id, callback) {
+	var sc = angular.element(document.getElementById(element_id)).scope();
+    
+	if(sc){
+	    sc.$apply(function(sc){
+	        callback(sc);
+	    });
+    }
+}
+
 /* Controllers */
 
 /*
@@ -48,24 +58,25 @@ function updateModel(element_id, callback) {
  */
 function lunchtimeController($scope, socket) {
   
-  	// Get the User Location in order to check for lunchtime resturants nearby
-	function getUserLocation() {
-		if(navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(updateUserLocation);
-		} else {
-			// GeoLocation is not supported
-			console.log('No GeoLocation');
-		}
-	}
+ //  	// Get the User Location in order to check for lunchtime resturants nearby
+	// function getUserLocation() {
+	// 	if(navigator.geolocation) {
+	// 		navigator.geolocation.getCurrentPosition(updateUserLocation);
+	// 	} else {
+	// 		// GeoLocation is not supported
+	// 		console.log('No GeoLocation');
+	// 	}
+	// }
 
-	// Callback function to let the Node server know of the user's location
-	function updateUserLocation(position) {
-		console.log(position.coords.latitude);
-		socket.emit('client:userLocation', {latitude : position.coords.latitude, longitude : position.coords.longitude});
-	}	
+	// // Callback function to let the Node server know of the user's location
+	// function updateUserLocation(position) {
+	// 	console.log(position.coords.latitude);
+	// 	//socket.emit('client:userLocation', {latitude : position.coords.latitude, longitude : position.coords.longitude});
+
+	// }	
 
 	// Invoke the getUserLocation function
-	getUserLocation();
+	//getUserLocation();
 
 	// Check for the Server sending the users name
 	socket.on('send:name', function (data) {
@@ -78,8 +89,32 @@ function lunchtimeController($scope, socket) {
  */
 function restaurantsController($scope, socket) {
 	
+// Get the User Location in order to check for lunchtime resturants nearby
+	function getUserLocation() {
+		if(navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(updateUserLocation);			
+		} else {
+			// GeoLocation is not supported
+			console.log('No GeoLocation');
+		}
+	}
+
+	function updateUserLocation(position) {
+		console.log(position.coords.latitude);
+		$scope.userLocation = {latitude : position.coords.latitude, longitude : position.coords.longitude };	
+		// updateModel2('restaurantList', function(scope) {
+		// 	scope.userLocation = {latitude : position.coords.latitude, longitude : position.coords.longitude };	
+		// })
+		
+		//socket.emit('client:userLocation', {latitude : position.coords.latitude, longitude : position.coords.longitude});
+
+	}
+
+	// Invoke the getUserLocation function
+	getUserLocation();
+
 	// When userLocation message is recieved from the node server add to the $scope
-	socket.on('send:userLocation', function (data) {
+	socket.on('return:userLocation', function (data) {
 		$scope.userLocation = data;
 	});
 
