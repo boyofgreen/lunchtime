@@ -60,6 +60,7 @@ function lunchtimeController($scope, socket) {
 
 	// Callback function to let the Node server know of the user's location
 	function updateUserLocation(position) {
+		console.log(position.coords.latitude);
 		socket.emit('send:userLocation', {latitude : position.coords.latitude, longitude : position.coords.longitude});
 	}	
 
@@ -80,6 +81,7 @@ function restaurantsController($scope, socket) {
 	// When userLocation message is recieved from the node server add to the $scope
 	socket.on('send:userLocation', function (data) {
 		$scope.userLocation = data;
+		socket.disconnect();
 	});
 
 	// When restaurant data is recieved from the node server add to the $scope
