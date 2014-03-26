@@ -51,6 +51,7 @@ function lunchtimeController($scope, socket) {
   	// Get the User Location in order to check for lunchtime resturants nearby
 	function getUserLocation() {
 		if(navigator.geolocation) {
+			console.log('we have geo')
 			navigator.geolocation.getCurrentPosition(updateUserLocation);
 		} else {
 			// GeoLocation is not supported
@@ -61,15 +62,18 @@ function lunchtimeController($scope, socket) {
 	// Callback function to let the Node server know of the user's location
 	function updateUserLocation(position) {
 		console.log(position.coords.latitude);
-		socket.emit('send:userLocation', {latitude : position.coords.latitude, longitude : position.coords.longitude});
+		//socket.emit('send:userLocation', {latitude : position.coords.latitude, longitude : position.coords.longitude});
+		$scope.userLocation = {latitude : position.coords.latitude, longitude : position.coords.longitude};
 	}	
 
 	// Invoke the getUserLocation function
-	getUserLocation();
+	setTimeout(getUserLocation, 10)
 
 	// Check for the Server sending the users name
 	socket.on('send:name', function (data) {
 		$scope.name = data.name;
+		//getUserLocation();
+
 	});
 }
 
@@ -80,13 +84,17 @@ function restaurantsController($scope, socket) {
 	
 	// When userLocation message is recieved from the node server add to the $scope
 	socket.on('send:userLocation', function (data) {
+		console.log(data)
 		$scope.userLocation = data;
-		socket.disconnect();
+
+		//socket.disconnect();
 	});
 
 	// When restaurant data is recieved from the node server add to the $scope
 	socket.on('send:getRestaurants', function (data) {
 		$scope.restaurants = data.restaurants;
+		console.log('resturantes')
+		console.log(data)
 	});
 
 	// When user preference data is recieved from the node server add to the $scope

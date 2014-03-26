@@ -25,7 +25,7 @@ module.exports = function (socket) {
 
 	// Recieve the users location from the client app
 	socket.on('send:userLocation', function (data) {
-		//console.log("userLocation: " + data.latitude + ", " + data.longitude);
+		console.log("userLocation: " + data.latitude + ", " + data.longitude);
 		socket.emit('send:userLocation',data);
 		socket.disconnect();
 	});
