@@ -63,15 +63,8 @@ function lunchtimeController($scope, socket) {
 		socket.emit('send:userLocation', {latitude : position.coords.latitude, longitude : position.coords.longitude});
 	}	
 
-	function getUserLocalTimeZone () {
-		console.log(jstz.determine());
-		socket.emit('send:userTimeZone', { userTimeZone: jstz.determine() });
-	}
-
-
 	// Invoke the getUserLocation function
 	getUserLocation();
-	//getUserLocalTimeZone();
 
 	// Check for the Server sending the users name
 	socket.on('send:name', function (data) {
