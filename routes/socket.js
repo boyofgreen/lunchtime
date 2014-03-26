@@ -3,6 +3,7 @@
  */
 
 module.exports = function (socket) {
+	
 	// Send a user name to the app on connection
 	socket.emit('send:name', {
 		name: 'Lunchtime user'
@@ -26,12 +27,15 @@ module.exports = function (socket) {
 	socket.on('send:userLocation', function (data) {
 		//console.log("userLocation: " + data.latitude + ", " + data.longitude);
 		socket.emit('send:userLocation',data);
+		socket.disconnect();
 	});
 
 	// Recieve the users timezone from the client app
 	socket.on('send:userTimeZone', function (data) {
 		//console.log(data);
 	});
+
+	
 };
 
 
