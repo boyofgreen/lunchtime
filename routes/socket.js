@@ -19,22 +19,12 @@ module.exports = function (socket) {
 		restaurants: getRestaurants()
 	});
 
-	socket.emit('send:timeUntilLunch', {
-		timeUntilLunch: timeUntilLunch()
-	});
-
-	// Recieve the users location from the client app
-	socket.on('send:userLocation', function (data) {
-		console.log("userLocation: " + data.latitude + ", " + data.longitude);
-		socket.emit('send:userLocation',data);
+	// Receive the users location from the client app
+	socket.on('client:userLocation', function (data) {
+		//console.log("userLocation: " + data.latitude + ", " + data.longitude);
+		socket.emit('return:userLocation',data);
 		socket.disconnect();
 	});
-
-	// Recieve the users timezone from the client app
-	socket.on('send:userTimeZone', function (data) {
-		//console.log(data);
-	});
-
 	
 };
 
@@ -82,20 +72,4 @@ function getUserPreferences() {
 		{ 'id' : 3 }
 	]
 	return preferences;
-}
-
-function timeUntilLunch() {
-	
-	var now = new Date();
-
-	var secondsPassed = 0;
-	var noon = 12 * 3600;
-
-	secondsPassed += ( now.getHours() * 3600 );
-	secondsPassed += ( now.getMinutes() * 60 );
-	secondsPassed += now.getSeconds();
-
-	var secondsLeft = noon - secondsPassed;
-
-	return secondsLeft;
 }
